@@ -1,0 +1,8 @@
+Implement all the parameter look ups
+Calculate second necessary angle, phi
+Put constants in data file
+Rearrange Files into directories
+Calculate DOP of visible sats
+Stretch:
+    Given a sat and pos, estimate received power
+
