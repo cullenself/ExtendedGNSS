@@ -1,8 +1,17 @@
-Implement all the parameter look ups
-Calculate second necessary angle, phi
-Put constants in data file
-Rearrange Files into directories
-Calculate DOP of visible sats
+-Implement all the parameter look ups
+    -Set up slide processing
+    -Interpolation / Rounding Formulas
+-Calculate second necessary angle, phi
+    -Sun Position
+    -Coordinate Transformation
+    -Vector Dot Product
+-Put constants in data file
+    -Rx Config File
+    -Tx Config File
+-Rearrange Files into directories
+-Calculate DOP of visible sats
+    -Information Matrix (unit vectors)
+    -Formulas
 Stretch:
-    Given a sat and pos, estimate received power
+    -Given a sat and pos, estimate received power
 
