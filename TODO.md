@@ -1,0 +1,21 @@
+# Todo:
+
+- [ ] Get code running at a minimum
+    - [ ] Angles
+    - [ ] Distances
+    - [ ] Visible Sats
+- [ ] Calculate second necessary angle, phi
+    - [x] Sun Position
+    - [x] Coordinate Transformation
+    - [x] Vector Dot Product
+    - [ ] Code up notes
+- [ ] Put constants in data file
+    - [ ] Rx Config File
+    - [ ] Tx Config File
+- [ ] Implement all the parameter look ups
+    - [ ] Set up slide processing (time consuming, not priority)
+    - [ ] Interpolation / Rounding Formulas (intermediate)
+- [ ] Rearrange Files into directories
+- [ ] Calculate DOP of visible sats
+    - [ ] Information Matrix (unit vectors)
+    - [ ] Formulas
