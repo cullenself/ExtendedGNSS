@@ -2,13 +2,18 @@
 
 - [ ] Get code running at a minimum
     - [ ] Angles
-    - [ ] Distances
+    - [x] Distances
     - [ ] Visible Sats
+    - [ ] Finish turing yaw angle to pointing angle
 - [ ] Calculate second necessary angle, phi
     - [x] Sun Position
     - [x] Coordinate Transformation
     - [x] Vector Dot Product
     - [ ] Code up notes
+- [ ] Make calculations a function
+    - [ ] Rewrite try1.m into observable(time, rx)
+    - [ ] Make script to run different rx configs
+    - [ ] Or output needed gain
 - [ ] Put constants in data file
     - [ ] Rx Config File
     - [ ] Tx Config File
@@ -19,3 +24,11 @@
 - [ ] Calculate DOP of visible sats
     - [ ] Information Matrix (unit vectors)
     - [ ] Formulas
+- [ ] Documentation
+    - [ ] File Headers
+    - [ ] Where configuration numbers come from
+- [ ] Potential Graphs
+    - [ ] Gain as function of altitude
+    - [ ] Places where standard receivers work
+    - [ ] Gain as function of time?
+- [ ] Clean up for merge back into master
