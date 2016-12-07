@@ -5,6 +5,7 @@
     - [x] Distances
     - [ ] Visible Sats
     - [ ] Finish turing yaw angle to pointing angle
+    - [ ] Sign ambiguity offbore angle
 - [ ] Calculate second necessary angle, phi
     - [x] Sun Position
     - [x] Coordinate Transformation
@@ -20,6 +21,7 @@
 - [ ] Implement all the parameter look ups
     - [ ] Set up slide processing (time consuming, not priority)
     - [ ] Interpolation / Rounding Formulas (intermediate)
+    - [ ] EarthCutoff as function of RX position
 - [ ] Rearrange Files into directories
 - [ ] Calculate DOP of visible sats
     - [ ] Information Matrix (unit vectors)
