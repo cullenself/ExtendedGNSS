@@ -34,11 +34,11 @@ visible = trans(~[trans.blocked]);
 for i = 1:length(visible)
     % Calculate Second Angle, Phi, use a function because its a fairly involved process
     visible(i).phi = findRotationAngle(visible(i), gpsWeek, gpsSec); % returns phi in degrees, function of SV position, RX position, and time
-    visible(i).power = SatPowerOut(visible(i).SVID) + SatDirectivityGain(visible(i).SVID,visible(i).offboreTX, visible(i).phi) + SatGainCF(visible(i).SVID) + 20*log10(lambdaGPSL1/(4*pi*norm(visible(i).rel))) + RXGain(visible(i).offboreRX); % multiple things need to be checked out, log vs log10, need to make SatPowerOut matrix, SatDGain depends on another angle that I don't know, must make up RXGain, need to cite this formula
-    visible(i).cn0 = visible(i).power - 10*log10(Tsys) + 228.6 + RXNoise; % RXNoise is negative
-    if visible(i).cn0 > 25
-        visible(i).tracked = 1;
-    else
-        visible(i).tracked = 0;
-    end
+%     visible(i).power = SatPowerOut(visible(i).SVID) + SatDirectivityGain(visible(i).SVID,visible(i).offboreTX, visible(i).phi) + SatGainCF(visible(i).SVID) + 20*log10(lambdaGPSL1/(4*pi*norm(visible(i).rel))) + RXGain(visible(i).offboreRX); % multiple things need to be checked out, log vs log10, need to make SatPowerOut matrix, SatDGain depends on another angle that I don't know, must make up RXGain, need to cite this formula
+%     visible(i).cn0 = visible(i).power - 10*log10(Tsys) + 228.6 + RXNoise; % RXNoise is negative
+%     if visible(i).cn0 > 25
+%         visible(i).tracked = 1;
+%     else
+%         visible(i).tracked = 0;
+%     end
 end

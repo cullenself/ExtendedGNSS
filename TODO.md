@@ -1,16 +1,20 @@
 # Todo:
 
 - [ ] Get code running at a minimum
-    - [ ] Angles
+    - [x] Angles
     - [x] Distances
-    - [ ] Visible Sats
-    - [ ] Finish turing yaw angle to pointing angle
+    - [x] Visible Sats
+    - [x] Finish turing yaw angle to pointing angle
     - [ ] Sign ambiguity offbore angle
-- [ ] Calculate second necessary angle, phi
+    - [ ] EarthCutoff as function of RX position
+    - [ ] Implement all the parameter look ups
+        - [ ] Set up slide processing (time consuming, not priority)
+        - [ ] Interpolation / Rounding Formulas (intermediate)
+- [x] Calculate second necessary angle, phi
     - [x] Sun Position
     - [x] Coordinate Transformation
     - [x] Vector Dot Product
-    - [ ] Code up notes
+    - [x] Code up notes
 - [ ] Make calculations a function
     - [ ] Rewrite try1.m into observable(time, rx)
     - [ ] Make script to run different rx configs
@@ -18,10 +22,6 @@
 - [ ] Put constants in data file
     - [ ] Rx Config File
     - [ ] Tx Config File
-- [ ] Implement all the parameter look ups
-    - [ ] Set up slide processing (time consuming, not priority)
-    - [ ] Interpolation / Rounding Formulas (intermediate)
-    - [ ] EarthCutoff as function of RX position
 - [ ] Rearrange Files into directories
 - [ ] Calculate DOP of visible sats
     - [ ] Information Matrix (unit vectors)
