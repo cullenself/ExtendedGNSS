@@ -7,4 +7,3 @@ theta_g = mod(280.46061837 + 360.98564733629*(T*36525) + 0.000387933*T^2 - T^3/3
 Q = rotate(theta_g,3);
 r_ecef = Q'*r_eci;
 end
-
