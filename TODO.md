@@ -1,0 +1,21 @@
+# Todo:
+
+- [ ] Implement all the parameter look ups
+    - [ ] Set up slide processing (time consuming, not priority)
+    - [x] Interpolation / Rounding Formulas (intermediate)
+- [ ] Receiver gain
+    - [ ] Calculate offbore RX angle
+    - [ ] Implement RXGain model
+- [x] Make calculations a function (branch: many)
+- [ ] Unit Tests of Functions
+- [ ] Rearrange Files into directories
+- [ ] Calculate DOP of visible sats
+    - [ ] Information Matrix (unit vectors)
+    - [ ] Formulas
+- [ ] Documentation
+    - [ ] File Headers
+    - [ ] Where configuration numbers come from
+- [ ] Potential Graphs
+    - [ ] Gain as function of altitude
+    - [ ] Places where standard receivers work
+    - [ ] Gain as function of time?
