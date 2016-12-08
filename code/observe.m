@@ -1,4 +1,4 @@
-function [ tracked, neededGain ] = observe( rx , gpsWeek , gpsSec )
+function [ tracked, neededGain ] = observe( rx , gpsWeek , gpsSec , satdata , thresh )
 %observe - calculate the received power and carrier to noise ratios for a
 % given antenna, based on Lockheed Martin provided satellite directivity
 % patterns.
@@ -18,7 +18,6 @@ function [ tracked, neededGain ] = observe( rx , gpsWeek , gpsSec )
 %   neededGain - additional gain needed to make position observable
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 config;
-satdata = retrieveNavigationData(gpsWeek,gpsSec,0,navDirectory);
 
 % break out into positions and pointing angles
 for i = 1:length(satdata)
@@ -44,7 +43,7 @@ for i = 1:length(visible)
     % Calculate Second Angle, Phi, use a function because its a fairly involved process
     visible(i).power = SatPowerOut(visible(i).SVID) + SatDirectivityGain(dirGain,visible(i).offboreTX, visible(i).phi) + SatGainCF(visible(i).SVID) + 20*log10(lambdaGPSL1/(4*pi*norm(visible(i).rel))) + rx.RXGain; % multiple things need to be checked out, log vs log10, need to make SatPowerOut matrix, SatDGain depends on another angle that I don't know, must make up RXGain, need to cite this formula
     visible(i).cn0 = visible(i).power - 10*log10(rx.Tsys) + 228.6 + rx.RXNoise; % RXNoise is negative
-    if visible(i).cn0 > 25
+    if visible(i).cn0 > thresh
         visible(i).tracked = 1;
     else
         visible(i).tracked = 0;
@@ -52,6 +51,6 @@ for i = 1:length(visible)
 end
 tracked = visible(~~[visible.tracked]);
 temp = sort([visible.cn0],'descend');
-neededGain = 25 - temp(4);
+neededGain = thresh - temp(4);
 end
 

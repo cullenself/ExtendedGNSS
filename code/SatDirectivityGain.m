@@ -6,7 +6,7 @@ function [ gain ] = SatDirectivityGain( gainMat, offbore, phi  )
 lowoff = 2*floor(offbore/2);
 highoff = 2*ceil(offbore/2);
 lowphi = 10*floor(phi/10);
-highphi = 10*ceil(phi/10);
+highphi = mod(10*ceil(phi/10),360);
 
 lowi = (lowoff + 90)/2 + 1;
 highi = (highoff + 90)/2 + 1;

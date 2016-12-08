@@ -19,3 +19,9 @@
     - [ ] Gain as function of altitude
     - [ ] Places where standard receivers work
     - [ ] Gain as function of time?
+    - [ ] Skymap?
+- [ ] Model Actual Sat
+    - [ ] Constant params
+    - [ ] Pointing model
+    - [ ] Offbore gain model
+    - [ ] Orbit Propagation
