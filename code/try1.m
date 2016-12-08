@@ -1,7 +1,7 @@
 clear; clc; close all;
 % Constants
 navDirectory = '../NavFiles';
-EarthCutoff = 13.8; % deg ( need to calculate based on size of Earth and distance )
+EarthCutoff = ceil(atan2d(6371+500,20200+6371)); % deg ( need to calculate based on size of Earth and distance )
 TXConfig;
 navConstants;
 rxconfig;
@@ -39,3 +39,4 @@ for i = 1:length(visible)
         visible(i).tracked = 0;
     end
 end
+good = visible(~~[visible.tracked])
