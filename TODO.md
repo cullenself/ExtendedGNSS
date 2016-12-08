@@ -1,31 +1,12 @@
 # Todo:
 
-- [x] Get code running at a minimum
-    - [x] Angles
-    - [x] Distances
-    - [x] Visible Sats
-    - [x] Finish turing yaw angle to pointing angle
-- [ ] Get code running correctly
-    - [x] Check directivity lookup
-    - [x] Sign ambiguity offbore angle
-    - [ ] EarthCutoff as function of TX position
-    - [ ] Implement all the parameter look ups
-        - [ ] Set up slide processing (time consuming, not priority)
-        - [x] Interpolation / Rounding Formulas (intermediate)
+- [ ] Implement all the parameter look ups
+    - [ ] Set up slide processing (time consuming, not priority)
+    - [x] Interpolation / Rounding Formulas (intermediate)
+- [ ] Receiver gain
     - [ ] Calculate offbore RX angle
-    - [ ] Implement RXGain for offbore angles
-- [x] Calculate second necessary angle, phi
-    - [x] Sun Position
-    - [x] Coordinate Transformation
-    - [x] Vector Dot Product
-    - [x] Code up notes
-- [ ] Make calculations a function
-    - [ ] Rewrite try1.m into observable(time, rx)
-    - [ ] Make script to run different rx configs
-    - [ ] Or output needed gain
-- [x] Put constants in data file
-    - [x] Rx Config File
-    - [x] Tx Config File
+    - [ ] Implement RXGain model
+- [ ] Make calculations a function (branch: many)
 - [ ] Unit Tests of Functions
 - [ ] Rearrange Files into directories
 - [ ] Calculate DOP of visible sats
@@ -38,4 +19,3 @@
     - [ ] Gain as function of altitude
     - [ ] Places where standard receivers work
     - [ ] Gain as function of time?
-- [ ] Clean up for merge back into master
