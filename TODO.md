@@ -6,12 +6,13 @@
     - [x] Visible Sats
     - [x] Finish turing yaw angle to pointing angle
 - [ ] Get code running correctly
-    - [ ] Check directivity lookup
-    - [ ] Sign ambiguity offbore angle
+    - [x] Check directivity lookup
+    - [x] Sign ambiguity offbore angle
     - [ ] EarthCutoff as function of TX position
     - [ ] Implement all the parameter look ups
         - [ ] Set up slide processing (time consuming, not priority)
         - [x] Interpolation / Rounding Formulas (intermediate)
+    - [ ] Calculate offbore RX angle
     - [ ] Implement RXGain for offbore angles
 - [x] Calculate second necessary angle, phi
     - [x] Sun Position
