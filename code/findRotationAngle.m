@@ -1,4 +1,4 @@
-function [phiDeg, offboreDeg] = findRotationAngles( sat, gpsWeek, gpsSec )
+function [phiDeg, offboreDeg] = findRotationAngle( sat, gpsWeek, gpsSec )
 % findRotationAngle - write this header
 e_h = cross(sat.r,sat.v)/(norm(cross(sat.r,sat.v)));
 % convert time to days since solstice
