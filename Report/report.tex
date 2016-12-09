@@ -1,0 +1,164 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{setspace}
+% load matlab package with ``framed'' and ``numbered'' option.
+%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage{listings}
+\lstset{
+	breakatwhitespace=true,
+	breaklines=true,
+	frame=single,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	stepnumber=5,
+	tabsize=3,
+	language=MATLAB,
+	basicstyle=\small
+}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{cite}
+%\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{bm}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+% TODO:
+%finish abstract
+%finish intro
+%proof
+
+\title{ASE 372N Laboratory \#1 \\ \huge \bfseries Handheld GPS Data}
+\author{\Large Matthew Cullen \textsc{Self}}
+\date{\today}
+
+\begin{document}
+%\onehalfspace
+\maketitle
+\hrule
+\section{Abstract}
+
+Using a Trimble Juno SC hand held Global Positioning System (GPS) receiver, the accuracy and precision of a commercial GPS receiver was evaluated. The Wide Area Augmentation System (WAAS) was found to increase positional accuracy and precision. Other factors that increased the precision of the receiver were decreasing physical obstructions blocking a view of the sky, and waiting for the position estimate to converge before starting to collect data. Based on the data collected, various error metrics were calculated, all reflecting the precision (or repeatably) of the GPS receiver. The apparent drift of a stationary receiver visualizes how, even after a position estimate is converged on, the receiver still had uncertainty in its position. Finally, the position reported by the receiver was compared to the known position of the receiver in mapping software and the discrepancy between the two is explained.
+
+
+\section{Introduction}
+% intro how gps system works more
+Global Positioning System (GPS) receivers work by utilizing radio signals emitted by orbiting satellites. By carefully evaluating the delays and shifts in multiple signals, an estimate of the receiver's position can be found. Most GPS receivers output to log files once a second in a standard way, which can be processed to obtain a longitude, latitude, height, satellites being tracked, and time. The position elements (latitude, longitude, and height) are given with respect to the WGS-84 datum - a model that accounts for the Earth's oblateness with a flattened sphere (ellipsoid). Tracking the data output by a receiver over time reveals insight as to a particular receivers accuracy and precision.
+
+To evaluate the accuracy of a Trimble Juno SC receiver, data was collected at three separate locations in the same afternoon. At the South Mall of the UT Austin campus, the efficacy of the Wide Area Augmentation System (WAAS) signal on navigational accuracy was observed. The testing was done by logging two GPS tracking sessions: one with the WAAS correction, one without. Each data recording session lasted ten minutes. The sessions were consecutively completed in the same physical location, with minimal disturbances to the receiver. The accuracy of the receiver was then tested by collecting GPS log files at two known survey locations: the Mustang statue at the intersection of 24th Street and San Jacinto Avenue, and in front of the Engineering Teaching Center (both on the UT campus). The measurements were conducted using the WAAS signal, and, as before, each recording session lasted ten minutes. Two separate sets of logging data were collected at each location, non-consecutively.
+
+
+\section{Results and Analysis}
+%data processing
+After the field work was completed, the data was extracted from the Juno receiver for processing. The NMEA data files were run through the provided MATLAB script to obtain time, latitude, longitude, and height for each sample. General characteristics of the observation session were noted. To further analyze the positional accuracy, three separate MATLAB functions were constructed: a function that takes latitude, longitude, and altitude position and converts it into a Earth-centered, Earth-fixed Cartesian (ECEF) vector, a function that does the opposite, and a function that generates the rotational matrix necessary to convert from a ECEF position to a local east, north, up coordinates. The functions are presented in Listings \ref{lst:lla2ecef}, \ref{lst:ecef2lla}, and \ref{lst:ecef2enu}. % find refrences for code
+Additionally, a \verb|readFile| function (Listing \ref{lst:readFile}) was created to process through the data results and calculate the averages. This data was then passed to a \verb|lab1| script (Listing \ref{lst:lab1}) which performed relevant calculations. The general measurement results are presented in Tables \ref{tab:samples} and \ref{tab:vectors} below.
+\begin{table}[h]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{l|cccc}
+Site              & Average Latitude (rad) & Average Longitude (rad) & Average Height (m) & Average Satellites Tracked \\ \hline
+ETC 1             & 0.528655               & -1.705810               & 176.496937         & 6.437979                   \\ \hline
+ETC 2             & 0.528654               & -1.705813               & 182.581113         & 7.677892                   \\ \hline
+Mustang 1         & 0.528608               & -1.705770               & 162.440248         & 5.897833                   \\ \hline
+Mustang 2         & 0.528608               & -1.705770               & 160.164521         & 8.974551                   \\ \hline
+Tower WAAS        & 0.528575               & -1.705879               & 177.212945         & 8.027027                   \\ \hline
+Tower Uncorrected & 0.528574               & -1.705880               & 173.661834         & 7.908284                  
+\end{tabular}
+\end{adjustbox}
+\caption{GPS Position Data}
+\label{tab:samples}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{l|lll}
+Site              & Average i Position & Average j Position & Average k Position \\ \hline
+ETC 1             & -741974.202459     & -5462116.809348    & 3198234.343938     \\ \hline
+ETC 2             & -741990.074485     & -5462122.393554    & 3198233.276016     \\ \hline
+Mustang 1         & -741776.801639     & -5462281.903688    & 3197971.873153     \\ \hline
+Mustang 2         & -741775.893850     & -5462280.357084    & 3197970.193937     \\ \hline
+Tower WAAS        & -742387.437065     & -5462321.340827    & 3197793.502038     \\ \hline
+Tower Uncorrected & -742389.161765     & -5462319.977587    & 3197788.375730    
+\end{tabular}               
+\end{adjustbox}
+\caption{GPS Locations}
+\label{tab:vectors}
+\end{table}
+
+As seen, the average number of satellites tracked varied from below six to almost nine satellites. The most satellites were observed at the Mustang marker. In fact, the data between the two observations at the Mustang marker is incredibly consistent, varying only slightly in height (~2 meters). The data at the Engineering Teaching Center (ETC) marker was not near as consistent, probably due to increased obstructions from the surrounding buildings. Finally, the consecutive measurements from the tower agree fairly closely with each other, but the WAAS signal decreased the Spherical Error Probable, a measure of how precise the GPS system is. This was expected, as the purpose of the WAAS signal is to increase precision.
+
+Using MATLAB, the distance between the average position vectors of each marker was calculated and found to be 370.800314 meters. According to ballpark measurements from Google Maps, the distance is around 360 meters, making the GPS observation very reasonable.
+
+Since the Mustang marker data was the most consistent, the data was further reduced to yield residual vectors from the mean position in both the latitude, longitude, height frame, and the ECEF frame. These differential positions were then plotted to show how the signal drifts over space (Fig. \ref{fig:delta}). Note how the shape of each plot is the same, showing how latitude-longitude correlates directly to north-east.
+%\begin{figure}[h]
+%\centering
+%\begin{minipage}{0.45\linewidth}
+%\includegraphics[width=\textwidth]{latlondiff.png}
+%\caption*{Latitude vs Longitude}
+%\end{minipage}
+%\begin{minipage}{0.45\linewidth}
+%\includegraphics[width=\textwidth]{northeastdiff.png}
+%\caption*{North vs East}
+%\end{minipage}
+%\caption{Position Differential}
+%\label{fig:delta}
+%\end{figure}
+
+From the position differential vectors, the Spherical Error Probable (SEP), Circular Error Probable (CEP), and the standard deviation of height residuals was found. The SEP is a measure of how accurate the receiver is in a three dimensional space, while the CEP measures how accurate the receiver is in a two dimensional space (ignoring height). The results are presented in Table \ref{tab:error}. The SEP corresponds roughly to the Juno receiver's error metric (varied from 4-5 meters), but claims a much lower error than the receiver did. This is due to the receiver calculating its error to an external standard, while the SEP derived assumes the mean position is the true position.
+
+\begin{table}[h]
+\centering
+\caption{Errors for Mustang Observations}
+\label{tab:error}
+\begin{tabular}{c|ccc}
+Test \#  & SEP (m)  & CEP (m)  & $\sigma$ height (m) \\ \hline
+1 & 3.061343 & 0.976109 & 3.242631            \\ \hline
+2 & 1.933103 & 0.659444 & 2.645606           
+\end{tabular}
+\end{table}
+
+When Figure \ref{fig:delta} is viewed with the context of Table \ref{tab:error}, it becomes obvious that the more tightly packed set of points indicating the second data collection are much more precise than the wandering set of points indicating the first data collection. In fact, the tail of the Mustang 1 data set to the West shows how the receiver converged to the location from a much further position estimate. The same pattern can be seen in the Southern extreme of the Mustang 2 data. The first data collection had fewer average satellites (Table \ref{tab:samples}), and therefore a much slower convergence to an accurate position estimate. The inaccuracy is reflected in Table \ref{tab:error}'s error metrics.
+
+Further analysis of Table \ref{tab:error} shows that the standard deviation of the height residual is rather large - bigger than the Spherical Error Probable. This is because the standard deviation of the height residual is approximately twice the root mean square horizontal error. \cite{gps} Effectively, the probability of being inside a standard deviation is larger than being inside CEP, and only varies in one-dimension, making it a physically bigger measure.
+
+The precision of the Trimble receiver is around 0.12411 ($\frac{1}{\text{m}^2}$). This value was found by first combining the Mustang data sets, then taking the variances of each separate Cartesian vector element, then normalizing the variances into a single dimension, and finally taking the inverse of the normalized variances. This precision is a comparative measure that inversely indicates how much a set of observations varies, and doesn't exactly have a intuitive physical meaning. In fact, the precision estimate itself is rather rough, only being based on two sets of observations. Precision is different than the accuracy of the receiver; accuracy is how close the observations are to a recorded truth. This would be found if the absolute positions of the survey markers in the WGS-84 frame were readily available for comparison. Google Maps, however, \textit{is} readily available, and can be used to plot data taken from the first set of observations at the Mustang marker. The resulting positional map is shown in Fig. \ref{fig:map}. As can be seen, the GPS data indicates the marker is slightly West of where Google Maps renders it. This discrepancy could either be from incorrect image placement, or inaccuracy in the GPS receiver. More than likely, it results from Google's map being slightly off.
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=\textwidth]{maps.png}
+%\caption{Position of Receiver - Mustang 1}
+%\label{fig:map}
+%\end{figure}
+
+
+\section{Conclusion}
+After obtaining observational data from a Trimble Juno GPS receiver, various properties of the commercial receiver were found. The system performs best when it has a clear view of the skies and is able to track all available satellites. The receiver yields a position solution accurate to roughly 2 meters under optimal conditions after a proper convergence time (Table \ref{tab:error}, SEP \#2). It was shown that even with a stationary receiver, the reported position drifts due to changing satellite geometry, atmospheric interference, and other factors.
+
+In order to increase precision and accuracy of the system, a larger antennae could have been used, as well as collecting data for longer periods at each site to increase the sample size. The hand held receiver provided an incredibly accurate position estimate in the scheme of things, employing satellites to pin down a location to within the size of very large person. More precise positions, however, will be needed in the future for uses such as unmanned vehicles and augmented reality.
+
+
+%Using a Trimble Juno SC hand held Global Positioning System (GPS) receiver, the accuracy and precision of a commercial GPS receiver was evaluated. The effect of the Wide Area Augmentation System (WAAS) was found to increase positional accuracy and precision. Other factors that increased the precision of the receiver were decreasing physical obstructions blocking a view of the sky, and waiting for the position estimate to converge before starting to collect data. Based on the data collected, various error metrics were calculated, all reflecting the precision (or repeatably) of the GPS receiver. The apparent drift of a stationary receiver visualizes how, even after a position estimate is converged on, the receiver still had uncertainty in its position. Finally, the position reported by the receiver was compared to the known position of the receiver in mapping software and the discrepancy between the two is explained.
+\pagebreak
+\section{Code}
+%\lstinputlisting[caption={lla2ecef},label={lst:lla2ecef}]{lla2ecef.m}
+%\pagebreak
+%\lstinputlisting[caption={ecef2lla},label={lst:ecef2lla}]{ecef2lla.m}
+%\pagebreak
+%\lstinputlisting[caption={ecef2enu},label={lst:ecef2enu}]{ecef2enu.m}
+%\pagebreak
+%\lstinputlisting[caption={readFile},label={lst:readFile}]{readFile.m}
+%\pagebreak
+%\lstinputlisting[caption={lab1},label={lst:lab1}]{lab1.m}
+%explain code or post using comments
+\bibliographystyle{ieeetr}
+\bibliography{pangea}  
+\end{document}
