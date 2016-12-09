@@ -16,7 +16,7 @@ rx.RXNoise = 0;
 rx.RXGain = 0;
 thresh = 25;
 
-[X,Y] = meshgrid(-400000:1000:400000);
+[X,Y] = meshgrid(-100000:1000:100000);
 X = X*1000;
 Y = Y*1000;
 for i = 1:size(X,1)
