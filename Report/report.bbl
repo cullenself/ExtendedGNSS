@@ -1,0 +1,18 @@
+\begin{thebibliography}{}
+\bibitem{gps}
+P. Misra and P. Enge. \textit{Global Positioning Systems}. Lincoln, Massachusetts: Ganga-Jumana Press, revised second ed., 2012.
+\bibitem{ssv}
+F. Bauer. \textit{GPS Space Service Volume}. PNT Advisory Board Meeting, NASA. June 11, 2015.
+\bibitem{giove}
+T. Ebinuma and M. Unwin. \textit{GPS Receiver Demonstration on a Galileo Test Bed Satellite}.  The Journal of Navigation, The Royal Institute of Navigation. Pages 349-362, Vol. 60, No. 3, September 2007.
+\bibitem{orient}
+O. Montenbruck et al. \textit{GNSS Satellite Geometry and Attitude Models}. Advances in Space Research. Pages 1015-1029, Vol 56, 2015.
+\bibitem{class}
+J. Kronman. \textit{Experience Using GPS For Orbit Determination of a Geosynchronous Satellite}. GPS 2000, Institute of Navigation. Pages 1622-1626, September 2000.
+\bibitem{ao40}
+M. Moreau et al. \textit{Results from the GPS Flight Experiment on the High Earth Orbit AMSAT Oscar-40 Spacecraft}. GPS 2002, Institute of Navigation. September 2002.
+\bibitem{lockheed}
+W. Marquis and D. Reigh. \textit{The GPS Block IIR and IIR-M Broadcast L-band Antenna Panel}. Navigation, Institute of Navigation. Pages 329-347, Vol. 62, Issue 4, Winter 2015.
+\bibitem{astro}
+J. Meeus, \textit{Astronomical Algorithms}. Richmond: Willmann-Bell Inc., second ed., 1998. Ch. 25-26
+\end{thebibliography}

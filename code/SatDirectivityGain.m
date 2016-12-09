@@ -1,6 +1,8 @@
+(* ::Package:: *)
+
 function [ gain ] = SatDirectivityGain( gainMat, offbore, phi  )
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
+% SatDirectivityGain - use gainMat lookup table to find gain
+% corresponding to angles offbore and phi. Bilinear interpolation
 % dirGain(i,j) = bore(-90+2(i-1)) , phi(10*(j-1))
 
 lowoff = rem(2*floor(offbore/2),90);
@@ -17,13 +19,13 @@ if (lowi == highi)
     if (lowj == highj)
         gain = gainMat(lowi,lowj);
     else
-        gain = (phi-highphi)*gainMat(lowi,lowj)/10 + (phi-lowphi)*gainMat(lowi,highj)/10;
+        gain = (phi-highphi)*gainMat (lowi,lowj)/10 + (phi-lowphi)*gainMat (lowi,highj)/10;
     end
 elseif (lowj == highj)
-    gain = abs(offbore-highoff)*gainMat(lowi,lowj)/2 + abs(offbore-lowoff)*gainMat(highi,lowj)/2;
+    gain = abs(offbore-highoff)*gainMat (lowi,lowj)/2 + abs(offbore-lowoff)*gainMat (highi,lowj)/2;
 else
 
-    b = inv([1 lowoff lowphi lowoff*lowphi; 1 lowoff highphi lowoff*highphi; 1 highoff lowphi highoff*lowphi; 1 highoff highphi highoff*highphi])' ... 
+    b = inv ([1 lowoff lowphi lowoff*lowphi; 1 lowoff highphi lowoff*highphi; 1 highoff lowphi highoff*lowphi; 1 highoff highphi highoff*highphi])' ... 
     * [1;offbore;phi;offbore*phi];
 
     gain = b(1)*gainMat(lowi,lowj) + b(2)*gainMat(lowi,highj) + b(3)*gainMat(highi,lowj) + b(4)*gainMat(highi,highj);
