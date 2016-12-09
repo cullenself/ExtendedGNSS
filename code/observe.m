@@ -39,6 +39,7 @@ visible = trans(~[trans.blocked]);
 % screen out sats for which no data is available ***
 visible = visible(ismember([visible.SVID],validSVIDs));
 
+
 for i = 1:length(visible)
     % Calculate Second Angle, Phi, use a function because its a fairly involved process
     visible(i).power = SatPowerOut(visible(i).SVID) + SatDirectivityGain(dirGain,visible(i).offboreTX, visible(i).phi) + SatGainCF(visible(i).SVID) + 20*log10(lambdaGPSL1/(4*pi*norm(visible(i).rel))) + rx.RXGain; % multiple things need to be checked out, log vs log10, need to make SatPowerOut matrix, SatDGain depends on another angle that I don't know, must make up RXGain, need to cite this formula
@@ -49,8 +50,17 @@ for i = 1:length(visible)
         visible(i).tracked = 0;
     end
 end
-tracked = visible(~~[visible.tracked]);
-temp = sort([visible.cn0],'descend');
-neededGain = thresh - temp(4);
+if numel(visible)
+    tracked = visible(~~[visible.tracked]);
+else
+    tracked = visible;
+end
+if (numel(visible)<4)
+    warning('Not enough visible satellites!');
+    neededGain = NaN;
+else
+    temp = sort([visible.cn0],'descend');
+    neededGain = thresh - temp(4);
+end
 end
 

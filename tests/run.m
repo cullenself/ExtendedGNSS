@@ -1,8 +1,8 @@
 clear; close all; clc;
 
-addpath('./code');
-addpath('./code/helpers');
-addpath('./config');
+addpath('../code');
+addpath('../code/helpers');
+addpath('../config');
 
 rx.RXNoise = -4.5; % dB-Hz
 rx.r = [385000000,0,0]'; % m
@@ -13,7 +13,7 @@ gpsWeek = 1920;
 gpsSec = 345680;
 thresh = 30;
 
-satdata = retrieveNavigationData(gpsWeek,gpsSec,0,'./NavFiles');
+satdata = retrieveNavigationData(gpsWeek,gpsSec,0,'../NavFiles');
 
 % Vary the range to find needed gain
 for i = 1:100
