@@ -1,8 +1,8 @@
 clear; close all; clc;
 
-addpath('./code');
-addpath('./code/helpers');
-addpath('./config');
+addpath('../code');
+addpath('../code/helpers');
+addpath('../config');
 
 rx.RXNoise = -4.5; % dB-Hz
 rx.r = [60000,0,0]' * 1000; % m
@@ -13,6 +13,6 @@ gpsWeek = 1920;
 gpsSec = 345680+5000;
 thresh = 42;
 
-satdata = retrieveNavigationData(gpsWeek,gpsSec,0,'./NavFiles');
+satdata = retrieveNavigationData(gpsWeek,gpsSec,0,'../NavFiles');
 
 [ tracked, neededGain ] = observe( rx , gpsWeek , gpsSec , satdata , thresh ); 

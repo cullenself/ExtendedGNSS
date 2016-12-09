@@ -61,5 +61,5 @@ SatGainCF(7) = -1.4; % dB
 SatPowerOut(5) = assumedPowerOut; % SVN 50
 SatGainCF(5) = -1.3; % dB
 
-load('Antenna Data/test'); % imports dirGain matrix ***eventually make 3d with k for svid
+load('../Antenna Data/test'); % imports dirGain matrix ***eventually make 3d with k for svid
 % dirGain(i,j) = bore(-90+2(i-1)) , phi(10*(j-1))

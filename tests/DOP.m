@@ -1,8 +1,8 @@
 clear; close all; clc;
 
-addpath('./code');
-addpath('./code/helpers');
-addpath('./config');
+addpath('../code');
+addpath('../code/helpers');
+addpath('../config');
 
 rx.RXNoise = -4.5; % dB-Hz
 rx.r = [385000000,0,0]'; % m
