@@ -32,133 +32,140 @@
 \usepackage{caption}
 \usepackage{enumitem}
 \usepackage{adjustbox}
-% TODO:
-%finish abstract
-%finish intro
-%proof
+\usepackage[title]{appendix}
+\newcommand{\vb}{\boldsymbol}
+\newcommand{\vbh}[1]{\hat{\boldsymbol{#1}}}
+\newcommand{\vbb}[1]{\bar{\boldsymbol{#1}}}
+\newcommand{\vbt}[1]{\tilde{\boldsymbol{#1}}}
+\newcommand{\vbs}[1]{{\boldsymbol{#1}}^*}
+\newcommand{\vbd}[1]{\dot{{\boldsymbol{#1}}}}
+\newcommand{\by}{\times}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\sfrac}[2]{\textstyle \frac{#1}{#2}}
+\newcommand{\ba}{\begin{array}}
+\newcommand{\ea}{\end{array}}
+\newcommand{\sinc}{{\rm sinc}}
+\renewcommand{\equiv}{\triangleq}
+\newcommand{\cnr}{C/N_0}
+\newcommand{\sgn}{\rm sgn}
+\renewcommand{\Re}{\mathbb{R}}
+\renewcommand{\Im}{\mathbb{I}}
+\newcommand{\E}[1]{\mathbb{E}\left[ #1 \right]}
 
-\title{ASE 372N Laboratory \#1 \\ \huge \bfseries Handheld GPS Data}
+
+\title{ASE 372N \\ \huge \bfseries Extended Global Positioning System}
 \author{\Large Matthew Cullen \textsc{Self}}
 \date{\today}
+
+%\title{\large ASE 372N \\ \Huge \bfseries Extended Global Positioning System}
+%\author{\Large Matthew Cullen \textsc{Self}}
+%\date{\vfill \hrule \vspace{1em} December 9, 2016 \pagebreak}
 
 \begin{document}
 %\onehalfspace
 \maketitle
 \hrule
-\section{Abstract}
-
-Using a Trimble Juno SC hand held Global Positioning System (GPS) receiver, the accuracy and precision of a commercial GPS receiver was evaluated. The Wide Area Augmentation System (WAAS) was found to increase positional accuracy and precision. Other factors that increased the precision of the receiver were decreasing physical obstructions blocking a view of the sky, and waiting for the position estimate to converge before starting to collect data. Based on the data collected, various error metrics were calculated, all reflecting the precision (or repeatably) of the GPS receiver. The apparent drift of a stationary receiver visualizes how, even after a position estimate is converged on, the receiver still had uncertainty in its position. Finally, the position reported by the receiver was compared to the known position of the receiver in mapping software and the discrepancy between the two is explained.
+\begin{abstract}
+The physical properties of two different types of steel has been evaluated. Two different samples (Hot Rolled Steel and Cold Rolled Steel) were tested using a Universal Testing Machine to place each sample in tension. Diametrical extension, axial extensions, and the load and were collected for each sample as a function of the displacement. This data was used to calculate, for each test article, the engineering stress versus engineering strain graph, the Young's modulus, Poisson's ratio, the proportional limit, yield strength, the ultimate tensile strength, the ductility, the hardening exponent, and the toughness. It was found that CRS doesn't experience plastic behavior, has higher strength, and decreased ductility, while HRS has a period of perfect plasticity. Additionally, the formation of shear bands was observed to discolor both samples, as well as form a rough fracture region.
+\end{abstract}
 
 
 \section{Introduction}
-% intro how gps system works more
-Global Positioning System (GPS) receivers work by utilizing radio signals emitted by orbiting satellites. By carefully evaluating the delays and shifts in multiple signals, an estimate of the receiver's position can be found. Most GPS receivers output to log files once a second in a standard way, which can be processed to obtain a longitude, latitude, height, satellites being tracked, and time. The position elements (latitude, longitude, and height) are given with respect to the WGS-84 datum - a model that accounts for the Earth's oblateness with a flattened sphere (ellipsoid). Tracking the data output by a receiver over time reveals insight as to a particular receivers accuracy and precision.
+Global Navigation Satellite System (GNSS) receivers work by very carefully beaming information from known locations to an unknown location and evaluating the resulting shifts and delays in the signals as they arrive. This commonly takes place as a mobile devices discover their locations in reference to the known positions of the GPS satellites. Usually these devices are at, or near, the surface of the Earth - the use case for which GPS has been designed - thus GPS Satellite Vehicles (SVs) direct their information carrying signals towards the Earth. These signals are emitted by complex antenna systems, but the net result is effectively a hemisphere of radiation around the pointing direction (towards the center of the Earth). Because the GPS SVs are high in space ($\approx 20,200$ km altitude), the radiated signal does not fall only on Earth; some of the signal misses the Earth and is broadcast into an area surrounding the Earth. This overlap in signal coverage, forms the basis of the Space Service Volume (SSV), a region in space where GPS signals are available. The basis of this report is to examine the extent SSV and the viability of using GNSS signals in this region.
 
-To evaluate the accuracy of a Trimble Juno SC receiver, data was collected at three separate locations in the same afternoon. At the South Mall of the UT Austin campus, the efficacy of the Wide Area Augmentation System (WAAS) signal on navigational accuracy was observed. The testing was done by logging two GPS tracking sessions: one with the WAAS correction, one without. Each data recording session lasted ten minutes. The sessions were consecutively completed in the same physical location, with minimal disturbances to the receiver. The accuracy of the receiver was then tested by collecting GPS log files at two known survey locations: the Mustang statue at the intersection of 24th Street and San Jacinto Avenue, and in front of the Engineering Teaching Center (both on the UT campus). The measurements were conducted using the WAAS signal, and, as before, each recording session lasted ten minutes. Two separate sets of logging data were collected at each location, non-consecutively.
+\subsection{Motivation}
+Traditional methods of locating satellites rely on sporadic radar measurements to form a position and velocity estimate for a given SV. As more and more satellites are launched, the availability of radar measurements continues to decline (unless a SV is very important). To combat this, many satellites now have a GNSS receiver to provide navigational solutions formed not from ground based observations, but instead formed continuously from GNSS signals. This trend has been accelerated by the increasing quality and availability of GNSS receivers, making GNSS tracking of satellites cheaper and more reliable.
+
+Furthermore, it has been proven that GPS based navigation solutions are possible even from ``above the constellation,'' or at altitudes greater than the orbit of GPS satellites. Starting in 1990, a classified geosynchronous satellite ($\approx 36,000$ km altitude) used GPS signals at least in part of its navigation solution \cite{class}. The Radio Amateur Satellite Corporation (AMSAT) OSCAR-40 satellite was able to sporadically track satellites at an altitude of 59,000 km \cite{ao40}. NASA's Manetospheric Multi-Scale (MMS) mission, with a recently developed high gain receiver, was able to continuously track at least four satellites (the number required for a navigation solution) at altitudes of 70,000 km \cite{ssv}. These results form the baseline for additional studies into the feasibility of GPS navigation in High Earth Orbit.
+
+\subsection{Theory}
+The governing equations that determine whether or not a signal can be tracked or not are presented below in Equations \ref{eq:pow} and \ref{eq:cn0} \cite{ao40}.
+\begin{equation}
+\hat{P_r} = P_{out} + G_t + L_d + G_r
+\label{eq:pow}
+\end{equation}
+
+\begin{equation}
+\widehat{C/N_0} = \hat{P_r} + N_T + 228.6 + L_{sys}
+\label{eq:cn0}
+\end{equation}
+
+The estimated received power, $\hat{P_r}$, is a function of the emitted power, $P_{out}$, the transmitter gain, $G_t$, the receiver gain, $G_r$, and the free space attenuation $L_d < 0$. The attenuation follows the inverse-square law such that the decibel reduction is equal to \[ 20\log(\frac{\lambda}{4\pi \rho}). \] Once the received power has been estimated, an estimate of the carrier to noise ratio ($\cnr$) can be formed based on the thermal noise, $N_T < 0$, and the system losses due to front end noise and conversion losses, $L_{sys} < 0$. The thermal noise can be modeled as \[ N_T = -10 \log(T_{sys} \] where $T_sys$ is the equivalent system noise temperature. The resulting $\cnr$ determines whether a satellite can be tracked. If the $\cnr$ is above a threshold particular to the receiver, then the signal is deemed ``observable.'' 
+
+Many of the parameters are dependent on the receiver, such as the receiver gain, the system losses, the thermal noise, and the $\cnr$ threshold. These values can be systematically determined, and are particular to the antenna being used, the receiver hardware and software, and other implementation details.
+
+The parameter of interest for this report is the transmitter gain, $G_t$. Lockheed Martin has released the antenna gain patterns of many GPS satellites, making it possible to model the antenna gain accurately as a function of transmitter and receiver locations \cite{lockheed}. Crucially, the gain is dependent on two angles: the offbore angle, $\theta$, and the polar angle, $\varphi$. These two angles can be calculated based on the attitude of the transmitting satellite and the relative position vector. Then those angles can be used to determine the resulting directive gain of the transmission. Figure \ref{fig:examplegain} shows an example of the gain pattern. Inside low values of $\theta$, the gain is extremely high - this corresponds to the portion of the satellite's signal that is broadcast towards the Earth. There are additional ``sidelobes'' that extend outside this primary range, providing additional gain at some angles of $\varphi$.
+
+***insert example gain pic
+
+To calculate $\theta$ and $\varphi$, a yaw-steering attitude model was assumed \cite{orient}. This means that the satellite maintains a constant orientation towards the sun by varying a yaw angle around the primary pointing axis. This yaw angle, $\psi$ can be found in terms of the $\beta$ and $\mu$, the angles between the sun and the orbital plane, and the satellite and midnight (respectively).
+\begin{equation}
+\psi = \text{atan2}(-\tan(\beta),\sin(\mu))
+\label{eq:yaw}
+\end{equation}
+
+***insert angle pic
+
+This yaw angle, combined with a local orbital frame defined by the radial, along-track, and cross-track directions, makes it possible to relate the satellite position in ECEF to the Lockheed Martin prescribed body fixed axis. 
+
+\subsection{Implementation}
+Taken together, the previous section describes a model for transmission and reception of a SV's signal. This was coded in MATLAB as a series of functions that can be called from a master script. Core to the process is the \verb|findRotationAngle| function, which takes a structure containing a satellite's position, velocity, the relative position vector, and the time, and returns $\varphi$ and $\theta$. This is completed by first finding the position of the Sun in the ECEF frame (nontrivial, relies on \verb|findSun| \cite{astro}), then relating that to the yaw angle, and finally using the yaw angle and position to find the directional cosine matrices necessary to find the body fixed axes in the ECEF frame.
+
+A lookup function was implemented as \verb|SatDirectivityGain|, which takes $\varphi$ and $\theta$ as inputs, then performs the necessary bilinear interpolation. These were synthesized together in several experiments that tested the effects of various parameters on the number of tracked satellites.
 
 
 \section{Results and Analysis}
-%data processing
-After the field work was completed, the data was extracted from the Juno receiver for processing. The NMEA data files were run through the provided MATLAB script to obtain time, latitude, longitude, and height for each sample. General characteristics of the observation session were noted. To further analyze the positional accuracy, three separate MATLAB functions were constructed: a function that takes latitude, longitude, and altitude position and converts it into a Earth-centered, Earth-fixed Cartesian (ECEF) vector, a function that does the opposite, and a function that generates the rotational matrix necessary to convert from a ECEF position to a local east, north, up coordinates. The functions are presented in Listings \ref{lst:lla2ecef}, \ref{lst:ecef2lla}, and \ref{lst:ecef2enu}. % find refrences for code
-Additionally, a \verb|readFile| function (Listing \ref{lst:readFile}) was created to process through the data results and calculate the averages. This data was then passed to a \verb|lab1| script (Listing \ref{lst:lab1}) which performed relevant calculations. The general measurement results are presented in Tables \ref{tab:samples} and \ref{tab:vectors} below.
-\begin{table}[h]
-\centering
-\begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{l|cccc}
-Site              & Average Latitude (rad) & Average Longitude (rad) & Average Height (m) & Average Satellites Tracked \\ \hline
-ETC 1             & 0.528655               & -1.705810               & 176.496937         & 6.437979                   \\ \hline
-ETC 2             & 0.528654               & -1.705813               & 182.581113         & 7.677892                   \\ \hline
-Mustang 1         & 0.528608               & -1.705770               & 162.440248         & 5.897833                   \\ \hline
-Mustang 2         & 0.528608               & -1.705770               & 160.164521         & 8.974551                   \\ \hline
-Tower WAAS        & 0.528575               & -1.705879               & 177.212945         & 8.027027                   \\ \hline
-Tower Uncorrected & 0.528574               & -1.705880               & 173.661834         & 7.908284                  
-\end{tabular}
-\end{adjustbox}
-\caption{GPS Position Data}
-\label{tab:samples}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{l|lll}
-Site              & Average i Position & Average j Position & Average k Position \\ \hline
-ETC 1             & -741974.202459     & -5462116.809348    & 3198234.343938     \\ \hline
-ETC 2             & -741990.074485     & -5462122.393554    & 3198233.276016     \\ \hline
-Mustang 1         & -741776.801639     & -5462281.903688    & 3197971.873153     \\ \hline
-Mustang 2         & -741775.893850     & -5462280.357084    & 3197970.193937     \\ \hline
-Tower WAAS        & -742387.437065     & -5462321.340827    & 3197793.502038     \\ \hline
-Tower Uncorrected & -742389.161765     & -5462319.977587    & 3197788.375730    
-\end{tabular}               
-\end{adjustbox}
-\caption{GPS Locations}
-\label{tab:vectors}
-\end{table}
+\subsection{Single Satellite}
+A single satellite broadcasting was modeled. At a given instant in GPS time, the position of a satellite was determined, then the effects of changing several parameters was determined. The angles for $\phi$ and $\theta$ were calculated as a function of height above the North Pole, a region which was determined to have moderate visibility of the satellite. Figure \ref{fig:phiandtheta} shows the two plots. Note how the offbore angle $\theta$ is negative and drops below $-90\deg$. The drop below $-90\deg$ reflects that, at a certain altitude, the receiver is now behind the transmitter, and is unable to acquire any signals.
 
-As seen, the average number of satellites tracked varied from below six to almost nine satellites. The most satellites were observed at the Mustang marker. In fact, the data between the two observations at the Mustang marker is incredibly consistent, varying only slightly in height (~2 meters). The data at the Engineering Teaching Center (ETC) marker was not near as consistent, probably due to increased obstructions from the surrounding buildings. Finally, the consecutive measurements from the tower agree fairly closely with each other, but the WAAS signal decreased the Spherical Error Probable, a measure of how precise the GPS system is. This was expected, as the purpose of the WAAS signal is to increase precision.
+***insert phi and theta single sat
 
-Using MATLAB, the distance between the average position vectors of each marker was calculated and found to be 370.800314 meters. According to ballpark measurements from Google Maps, the distance is around 360 meters, making the GPS observation very reasonable.
+Figure \ref{fig:cnonorthpole} shows the modeled unbiased carrier to noise ratio. The unbiased carrier to noise ratio is found by setting the net gain and attenuation of the receiver and antenna to 0 dB, modeling a ``nuetral'' receiver. The biased, or actual received $\cnr$ can be found by adding back in the appropriate net gain to the unbiased $\cnr$. At precisely the same altitude that $\theta = 90\deg$, the $\cnr$ drops to 0, indicating that the signal isn't observable under any circumstances. The $\cnr$ plot also shows the presence of two side lobes extending beyond the main center lobe.
 
-Since the Mustang marker data was the most consistent, the data was further reduced to yield residual vectors from the mean position in both the latitude, longitude, height frame, and the ECEF frame. These differential positions were then plotted to show how the signal drifts over space (Fig. \ref{fig:delta}). Note how the shape of each plot is the same, showing how latitude-longitude correlates directly to north-east.
-%\begin{figure}[h]
-%\centering
-%\begin{minipage}{0.45\linewidth}
-%\includegraphics[width=\textwidth]{latlondiff.png}
-%\caption*{Latitude vs Longitude}
-%\end{minipage}
-%\begin{minipage}{0.45\linewidth}
-%\includegraphics[width=\textwidth]{northeastdiff.png}
-%\caption*{North vs East}
-%\end{minipage}
-%\caption{Position Differential}
-%\label{fig:delta}
-%\end{figure}
+***insert cnr northpole
 
-From the position differential vectors, the Spherical Error Probable (SEP), Circular Error Probable (CEP), and the standard deviation of height residuals was found. The SEP is a measure of how accurate the receiver is in a three dimensional space, while the CEP measures how accurate the receiver is in a two dimensional space (ignoring height). The results are presented in Table \ref{tab:error}. The SEP corresponds roughly to the Juno receiver's error metric (varied from 4-5 meters), but claims a much lower error than the receiver did. This is due to the receiver calculating its error to an external standard, while the SEP derived assumes the mean position is the true position.
+To better visualize the space in which a signal is observable, a mesh of locations was generated along the equatorial axis, extending to $\pm$100,000 km in both the ECEF x and ECEF y directions. The unbiased $\cnr$ was then plotted at each individual location, yielding Figure \ref{fig:cn0actual}. The plot has two main leaves, separated by the Earth's umbra, and bounded by the plane of the transmitting antenna. In each leaf, the side lobe gain patterns can be seen as certain lines of constant $\theta$ tend to have exceptionally high gains.
 
-\begin{table}[h]
-\centering
-\caption{Errors for Mustang Observations}
-\label{tab:error}
-\begin{tabular}{c|ccc}
-Test \#  & SEP (m)  & CEP (m)  & $\sigma$ height (m) \\ \hline
-1 & 3.061343 & 0.976109 & 3.242631            \\ \hline
-2 & 1.933103 & 0.659444 & 2.645606           
-\end{tabular}
-\end{table}
+***insert cnr actual
 
-When Figure \ref{fig:delta} is viewed with the context of Table \ref{tab:error}, it becomes obvious that the more tightly packed set of points indicating the second data collection are much more precise than the wandering set of points indicating the first data collection. In fact, the tail of the Mustang 1 data set to the West shows how the receiver converged to the location from a much further position estimate. The same pattern can be seen in the Southern extreme of the Mustang 2 data. The first data collection had fewer average satellites (Table \ref{tab:samples}), and therefore a much slower convergence to an accurate position estimate. The inaccuracy is reflected in Table \ref{tab:error}'s error metrics.
+To get a idealized plot of the side lobes, the transmitting satellite was modeled as being on the ECEF x-axis instead of in its proper 3 dimensional space. This had the effect of constraining $\varphi$ and $\theta$ to varying along the x-y plane that the receiver is modeled in. Figure \ref{fig:cn0xaxis} shows clearly the antenna gain pattern in the contour map on the floor of the plot. The highest $\cnr$ is closest to the antenna boresight, right outside the Earth's shadow. In actual mission planning, care must be taken not to optimize $\cnr$ so much that the received sigal actually passes through the Earth's atmosphere.
 
-Further analysis of Table \ref{tab:error} shows that the standard deviation of the height residual is rather large - bigger than the Spherical Error Probable. This is because the standard deviation of the height residual is approximately twice the root mean square horizontal error. \cite{gps} Effectively, the probability of being inside a standard deviation is larger than being inside CEP, and only varies in one-dimension, making it a physically bigger measure.
+***insert cnr x axis
 
-The precision of the Trimble receiver is around 0.12411 ($\frac{1}{\text{m}^2}$). This value was found by first combining the Mustang data sets, then taking the variances of each separate Cartesian vector element, then normalizing the variances into a single dimension, and finally taking the inverse of the normalized variances. This precision is a comparative measure that inversely indicates how much a set of observations varies, and doesn't exactly have a intuitive physical meaning. In fact, the precision estimate itself is rather rough, only being based on two sets of observations. Precision is different than the accuracy of the receiver; accuracy is how close the observations are to a recorded truth. This would be found if the absolute positions of the survey markers in the WGS-84 frame were readily available for comparison. Google Maps, however, \textit{is} readily available, and can be used to plot data taken from the first set of observations at the Mustang marker. The resulting positional map is shown in Fig. \ref{fig:map}. As can be seen, the GPS data indicates the marker is slightly West of where Google Maps renders it. This discrepancy could either be from incorrect image placement, or inaccuracy in the GPS receiver. More than likely, it results from Google's map being slightly off.
+\subsection{Many Satellites}
+Using the same mesh of possible receiver locations, the $\hat{P_r}$ and unbiased $cnr$ for the L1 signal from all the GPS Block IIR and IIR-M satellites was calculated. Because extracting each individual gain matrix involves opening and processing by hand an Excel Spreadsheet contained in a PowerPoint presentation (thanks Lockheed), the same gain characterization was assumed to be roughly valid for all satellites. By setting the tracking threshold to $25$ dB-Hz (consistent with NASA's latest GNSS receiver \cite{ssv}), the number of tracked satellites was mapped to the x-y plane in Figure \ref{fig:many}. The resulting map is slightly misleading, as it includes results from inside the Earth, but ***why wrong
 
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=\textwidth]{maps.png}
-%\caption{Position of Receiver - Mustang 1}
-%\label{fig:map}
-%\end{figure}
+***insert many
+
+\subsection{AMSAT OSCAR-40 Replication}
+To coarsely verify that the results are sensible, an experiment was set up to replicate the results of AMSAT OSCAR-40's mission. The receiver parameters were set to be equal to those provided by Moreau et al. and placed at an altitude equal to the apogee of the actual AO40 satellite. The number of tracked satellites was calculated every 15 minutes during a simulated 48 hour interval, and the resulting quantity vs time plot is presented below (see Fig. \ref{fig:ao40copy}). Note that, for the majority of the time, no satellites are tracked, with periodic bursts of one or two tracked satellites. This is consistent with the reported findings in \cite{ao40}.
+
+***insert ao40 copy
+
+In order to reflect a more modern version of AO40, the tracking threshold was decreased from $40$ dB-Hz to $25$ dB-Hz, while the net gains were assumed to remain the same. The changes reflect an improvement in tracking systems, and a miniaturization of early 2000's components. Figure \ref{fig:ao40new} shows the resulting number of tracked satellites, over the same time period.
+
+***insert ao40 new
+
+The drastic increase in number of tracked satellites shows that simply increasing the quality of the tracking  and acquisition system can make the difference between being able to compute a navigational system, and being forced to rely on other external tracking systems. The mean number of satellites tracked is 2.5, compared to the old version's 0.25.
 
 
-\section{Conclusion}
-After obtaining observational data from a Trimble Juno GPS receiver, various properties of the commercial receiver were found. The system performs best when it has a clear view of the skies and is able to track all available satellites. The receiver yields a position solution accurate to roughly 2 meters under optimal conditions after a proper convergence time (Table \ref{tab:error}, SEP \#2). It was shown that even with a stationary receiver, the reported position drifts due to changing satellite geometry, atmospheric interference, and other factors.
+\section{Conclusions}
+GPS provides a system for determining navigational solutions not just on or near Earth's surface, but also at altitudes high above Earth's surface. Modern tracking and acquisition systems allow relatively weak signals to be captured, and it is possible to model the received power of GPS signals at a given location in space. The model relies on GPS gain patterns and attitude models, and varies in time and with receiver parameters. 
 
-In order to increase precision and accuracy of the system, a larger antennae could have been used, as well as collecting data for longer periods at each site to increase the sample size. The hand held receiver provided an incredibly accurate position estimate in the scheme of things, employing satellites to pin down a location to within the size of very large person. More precise positions, however, will be needed in the future for uses such as unmanned vehicles and augmented reality.
+More work could be done to implement more satellite's gain patterns, rather than just relying on one as a proxy for all of them. Additionally, Lockheed has provided the gain patterns for the signal broadcast at L2 - these could be included to augment the number of observable satellites. In order to actually model what a given satellite would receive, a better model of the receiver is needed. Manufacturer data sheets do not provide a map from reception angles to gain: this would need to be empirically determined. Additionally, testing would reveal better values for other RX parameters.
 
+Finally, there is the potential to somehow incorporate the received signal strength into the measurement model of the navigational solution. This report has defined a model for the $\cnr$ as a function of $r$. By comparing the estimated $\cnr$ to the observed $\cnr$ in terms of the partial derivative, the model could fit into the general navigational solution. For example, if a satellite receives signals from GPS satellites $a$ and $b$ and the receiver knows $r_a$ and $r_b$, then that immediately constrains the possible solution space to those areas in front of satellites $a$ and $b$. 
 
-%Using a Trimble Juno SC hand held Global Positioning System (GPS) receiver, the accuracy and precision of a commercial GPS receiver was evaluated. The effect of the Wide Area Augmentation System (WAAS) was found to increase positional accuracy and precision. Other factors that increased the precision of the receiver were decreasing physical obstructions blocking a view of the sky, and waiting for the position estimate to converge before starting to collect data. Based on the data collected, various error metrics were calculated, all reflecting the precision (or repeatably) of the GPS receiver. The apparent drift of a stationary receiver visualizes how, even after a position estimate is converged on, the receiver still had uncertainty in its position. Finally, the position reported by the receiver was compared to the known position of the receiver in mapping software and the discrepancy between the two is explained.
 \pagebreak
+
+\begin{appendices}
 \section{Code}
-%\lstinputlisting[caption={lla2ecef},label={lst:lla2ecef}]{lla2ecef.m}
+%\lstinputlisting[caption={Cold Rolled Steel},label={lst:lab1_crs}]{lab1_crs.m}
 %\pagebreak
-%\lstinputlisting[caption={ecef2lla},label={lst:ecef2lla}]{ecef2lla.m}
+%\lstinputlisting[caption={Hot Rolled Steel},label={lst:lab2_hrs}]{lab1_hrs.m}
 %\pagebreak
-%\lstinputlisting[caption={ecef2enu},label={lst:ecef2enu}]{ecef2enu.m}
-%\pagebreak
-%\lstinputlisting[caption={readFile},label={lst:readFile}]{readFile.m}
-%\pagebreak
-%\lstinputlisting[caption={lab1},label={lst:lab1}]{lab1.m}
-%explain code or post using comments
 \bibliographystyle{ieeetr}
 \bibliography{pangea}  
+\end{appendices} 
+
 \end{document}

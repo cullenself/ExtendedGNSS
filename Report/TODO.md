@@ -2,11 +2,11 @@
 
 - [ ] Proofread
 - [ ] Format for presentation
-- [ ] Insert Necessary Images
+- [x] Insert Necessary Images
 - [ ] Content
     - [x] Setup
     - [x] Process
     - [ ] Results
     - [ ] Conclusions
-    - [ ] Refrences
+    - [x] Refrences
 - [ ] Practice
