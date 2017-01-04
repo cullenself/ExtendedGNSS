@@ -1,27 +1,25 @@
 # Todo:
 
-- [ ] Implement all the parameter look ups
-    - [ ] Set up slide processing (time consuming, not priority)
-    - [x] Interpolation / Rounding Formulas (intermediate)
-- [ ] Receiver gain
-    - [ ] Calculate offbore RX angle
-    - [ ] Implement RXGain model
-- [x] Make calculations a function (branch: many)
-- [ ] Unit Tests of Functions
-- [ ] Rearrange Files into directories
-- [ ] Calculate DOP of visible sats
-    - [ ] Information Matrix (unit vectors)
-    - [ ] Formulas
-- [ ] Documentation
-    - [ ] File Headers
-    - [ ] Where configuration numbers come from
-- [ ] Potential Graphs
-    - [ ] Gain as function of altitude
-    - [ ] Places where standard receivers work
-    - [ ] Gain as function of time?
-    - [ ] Skymap?
-- [ ] Model Actual Sat
-    - [ ] Constant params
-    - [ ] Pointing model
-    - [ ] Offbore gain model
-    - [ ] Orbit Propagation
+- Project Management
+    - [ ] Refactor Entire Project
+        - [ ] Folders (code, config, data, output)
+        - [ ] Single data process script that outputs data file
+    - [ ] Documentation
+        - [ ] File Headers
+        - [ ] Where configuration numbers come from
+        - [ ] Readme
+    - [ ] Tests of Functions
+    
+- Added Features
+    - [ ] More SV lookups (maybe process slides with script?)
+    - [ ] DOP and skyplot
+    - [ ] Model Actual Sat
+        - [ ] Constant params
+        - [ ] Pointing model
+        - [ ] Offbore gain model
+        - [ ] Orbit Propagation
+    - [ ] Dead Areas due to geometry
+    - [ ] Find and reproduce actual smallsat data (possibly GRACE?)
+    - [ ] Determine optimal antenna orientation as function of gain pattern
+    - [ ] Compare to other navigational methods
+    - [ ] Increase SV Yaw Model accuracy with many HOTs in coordinate transformations
